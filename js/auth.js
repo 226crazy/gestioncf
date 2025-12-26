@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const name = document.getElementById('regName').value;
         const email = document.getElementById('regEmail').value;
         const password = document.getElementById('regPassword').value;
+        const role = document.getElementById('regRole').value;
         const errorMessage = document.getElementById('regErrorMessage');
 
         try {
@@ -63,8 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
             await db.collection('managers').doc(userCredential.user.uid).set({
                 name: name,
                 email: email,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                role: 'manager'
+                role: role,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
             });
 
             // Redirect to dashboard

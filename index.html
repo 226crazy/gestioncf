@@ -35,7 +35,7 @@
 
         <!-- Register Form (hidden by default) -->
         <div class="login-box" id="registerBox" style="display: none;">
-            <h2>Créer un compte gérant</h2>
+            <h2>Créer un compte</h2>
 
             <form id="registerForm">
                 <div class="form-group">
@@ -51,6 +51,15 @@
                 <div class="form-group">
                     <label for="regPassword">Mot de passe</label>
                     <input type="password" id="regPassword" required placeholder="••••••••">
+                </div>
+
+                <div class="form-group">
+                    <label for="regRole">Rôle</label>
+                    <select id="regRole" required>
+                        <option value="gerant">Gérant</option>
+                        <option value="admin">Administrateur</option>
+                    </select>
+                    <small>Gérant: Peut enregistrer les sessions et voir les recettes<br>Admin: Accès complet</small>
                 </div>
 
                 <button type="submit" class="btn-primary">Créer le compte</button>

@@ -44,6 +44,7 @@ function setupSessionForm() {
 function setupConsoleSelect(index) {
     const consoleSelect = document.getElementById(`console_${index}`);
     const gameTypeSelect = document.getElementById(`gameType_${index}`);
+    const quantityInput = document.getElementById(`quantity_${index}`);
     const priceInfo = document.getElementById(`priceInfo_${index}`);
 
     consoleSelect.addEventListener('change', () => {
@@ -60,24 +61,31 @@ function setupConsoleSelect(index) {
         }
     });
 
-    gameTypeSelect.addEventListener('change', () => {
+    const updatePrice = () => {
         const console = consoleSelect.value;
         const gameTypeIndex = gameTypeSelect.value;
+        const quantity = parseInt(quantityInput.value) || 1;
 
         if (console && gameTypeIndex !== '' && PRICING[console]) {
             const selected = PRICING[console][gameTypeIndex];
-            priceInfo.textContent = `Prix: ${selected.price} F`;
-            updateSelectedGames(index, console, gameTypeIndex, selected.price);
+            const totalPrice = selected.price * quantity;
+            priceInfo.textContent = `Prix unitaire: ${selected.price} F × ${quantity} = ${totalPrice.toLocaleString('fr-FR')} F`;
+            updateSelectedGames(index, console, gameTypeIndex, selected.price, quantity);
             calculateTotal();
         }
-    });
+    };
+
+    gameTypeSelect.addEventListener('change', updatePrice);
+    quantityInput.addEventListener('input', updatePrice);
 }
 
-function updateSelectedGames(index, console, gameTypeIndex, price) {
+function updateSelectedGames(index, console, gameTypeIndex, price, quantity) {
     selectedGames[index] = {
         console: console,
         gameType: PRICING[console][gameTypeIndex].label,
-        price: price
+        price: price,
+        quantity: quantity,
+        totalPrice: price * quantity
     };
 }
 
@@ -109,6 +117,10 @@ function addGameEntry() {
                     <option value="">Sélectionner console d'abord...</option>
                 </select>
             </div>
+            <div class="form-group">
+                <label for="quantity_${newIndex}">Quantité (Nombre de fois)</label>
+                <input type="number" id="quantity_${newIndex}" class="quantity-input" min="1" value="1" required>
+            </div>
         </div>
         <div class="price-info" id="priceInfo_${newIndex}"></div>
         <button type="button" class="btn-danger" onclick="removeGame(this, ${newIndex})">Supprimer ce jeu</button>
@@ -126,7 +138,7 @@ function removeGame(button, index) {
 
 function calculateTotal() {
     const total = selectedGames.reduce((sum, game) => {
-        return sum + (game ? game.price : 0);
+        return sum + (game ? game.totalPrice : 0);
     }, 0);
 
     document.getElementById('totalAmount').textContent = `${total.toLocaleString('fr-FR')} F`;
@@ -201,6 +213,10 @@ async function handleSessionSubmit(e) {
                         <select id="gameType_0" class="game-type-select" required>
                             <option value="">Sélectionner console d'abord...</option>
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity_0">Quantité (Nombre de fois)</label>
+                        <input type="number" id="quantity_0" class="quantity-input" min="1" value="1" required>
                     </div>
                 </div>
                 <div class="price-info" id="priceInfo_0"></div>
