@@ -17,9 +17,12 @@ const firebaseConfig = {
   measurementId: "G-8X0KT4084B"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+// Initialiser Firebase
+firebase.initializeApp(firebaseConfig);
+
+// Services Firebase
+const auth = firebase.auth();
+const db = firebase.firestore();
 
 // Configuration des prix par défaut
 const PRICING = {
