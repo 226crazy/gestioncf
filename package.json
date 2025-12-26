@@ -1,0 +1,22 @@
+{
+  "name": "gaming-room-manager",
+  "version": "1.0.0",
+  "description": "Application de gestion pour salle de jeux",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "serve": "npx http-server ."
+  },
+  "keywords": [
+    "gaming",
+    "management",
+    "firebase",
+    "javascript"
+  ],
+  "author": "Votre Nom",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VOTRE-USERNAME/gaming-room-manager.git"
+  }
+}

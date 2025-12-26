@@ -1,0 +1,68 @@
+// Règles de sécurité Firestore
+// Copiez-collez ceci dans Firebase Console > Firestore Database > Règles
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Fonction pour vérifier si l'utilisateur est connecté
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // Fonction pour vérifier si l'utilisateur est le propriétaire
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+
+    // Collection managers
+    // Les gérants peuvent lire et modifier leur propre profil
+    // Les gérants peuvent lire les profils des autres gérants
+    match /managers/{managerId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow update, delete: if isSignedIn() && isOwner(managerId);
+    }
+
+    // Collection sessions
+    // Tous les gérants connectés peuvent lire et créer des sessions
+    match /sessions/{sessionId} {
+      allow read, create: if isSignedIn();
+      allow update, delete: if isSignedIn();
+    }
+
+    // Collection expenses
+    // Tous les gérants connectés peuvent gérer les dépenses
+    match /expenses/{expenseId} {
+      allow read, create: if isSignedIn();
+      allow update, delete: if isSignedIn();
+    }
+
+    // Collection electricity
+    // Tous les gérants connectés peuvent gérer le compteur électrique
+    match /electricity/{electricityId} {
+      allow read, create: if isSignedIn();
+      allow update, delete: if isSignedIn();
+    }
+
+    // Collection settings
+    // Tous les gérants connectés peuvent modifier les paramètres
+    match /settings/{settingId} {
+      allow read, write: if isSignedIn();
+    }
+
+    // Collection exports
+    // Tous les gérants connectés peuvent exporter
+    match /exports/{exportId} {
+      allow read, create: if isSignedIn();
+      allow update, delete: if isSignedIn();
+    }
+
+    // Collection backups
+    // Tous les gérants connectés peuvent créer des sauvegardes
+    match /backups/{backupId} {
+      allow read, create: if isSignedIn();
+      allow delete: if isSignedIn();
+    }
+  }
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord - Gestion Salle de Jeux</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">🎮 Salle de Jeux</div>
+        <div class="nav-links">
+            <a href="dashboard.html" class="active">Tableau de Bord</a>
+            <a href="sessions.html">Nouvelle Session</a>
+            <a href="reports.html">Rapports</a>
+            <a href="expenses.html">Dépenses</a>
+            <a href="settings.html">Paramètres</a>
+            <a href="#" id="logoutBtn">Déconnexion</a>
+        </div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Tableau de Bord</h1>
+            <p id="currentDate"></p>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Recettes du Jour</h3>
+                <p class="stat-value" id="todayRevenue">0 F</p>
+            </div>
+            <div class="stat-card">
+                <h3>Sessions Aujourd'hui</h3>
+                <p class="stat-value" id="todaySessions">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Consoles Actives</h3>
+                <p class="stat-value" id="activeConsoles">0</p>
+            </div>
+            <div class="stat-card">
+                <h3>Bénéfice du Mois</h3>
+                <p class="stat-value" id="monthProfit">0 F</p>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <h2>Actions Rapides</h2>
+            <div class="action-buttons">
+                <a href="sessions.html" class="btn-primary">➕ Nouvelle Session</a>
+                <button id="addMeterBtn" class="btn-secondary">⚡ Enregistrer Compteur</button>
+                <a href="expenses.html" class="btn-secondary">💰 Ajouter Dépense</a>
+            </div>
+        </div>
+
+        <!-- Active Sessions -->
+        <div class="section">
+            <h2>Sessions en Cours</h2>
+            <div id="activeSessions" class="sessions-list">
+                <p class="empty-message">Aucune session active</p>
+            </div>
+        </div>
+
+        <!-- Recent Sessions -->
+        <div class="section">
+            <h2>Dernières Sessions</h2>
+            <div id="recentSessions" class="sessions-list">
+                <p class="empty-message">Aucune session récente</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Meter Modal -->
+    <div id="meterModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Enregistrer le Compteur Électrique</h2>
+            <form id="meterForm">
+                <div class="form-group">
+                    <label for="meterValue">Valeur du Compteur (kWh)</label>
+                    <input type="number" id="meterValue" required step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="pricePerKwh">Prix par kWh (F)</label>
+                    <input type="number" id="pricePerKwh" required value="100" step="0.01">
+                </div>
+                <div id="consumptionInfo" class="info-box"></div>
+                <button type="submit" class="btn-primary">Enregistrer</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth-check.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paramètres - Gestion Salle de Jeux</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">🎮 Salle de Jeux</div>
+        <div class="nav-links">
+            <a href="dashboard.html">Tableau de Bord</a>
+            <a href="sessions.html">Nouvelle Session</a>
+            <a href="reports.html">Rapports</a>
+            <a href="expenses.html">Dépenses</a>
+            <a href="settings.html" class="active">Paramètres</a>
+            <a href="#" id="logoutBtn">Déconnexion</a>
+        </div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Paramètres</h1>
+        </div>
+
+        <!-- Google Sheets Integration -->
+        <div class="form-section">
+            <h2>📊 Intégration Google Sheets</h2>
+            <p>Synchronisez vos données avec Google Sheets pour une sauvegarde automatique et une analyse avancée.</p>
+
+            <div class="form-group">
+                <label for="sheetsUrl">URL Google Sheets</label>
+                <input type="url" id="sheetsUrl" placeholder="https://docs.google.com/spreadsheets/d/...">
+                <small>Créez une feuille Google et partagez-la avec l'accès en modification</small>
+            </div>
+
+            <div class="form-group">
+                <button id="connectSheetsBtn" class="btn-primary">Connecter Google Sheets</button>
+                <button id="syncNowBtn" class="btn-secondary">Synchroniser Maintenant</button>
+            </div>
+
+            <div id="sheetsStatus" class="info-box"></div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="autoSync">
+                    Synchronisation automatique (après chaque session)
+                </label>
+            </div>
+        </div>
+
+        <!-- Pricing Configuration -->
+        <div class="form-section">
+            <h2>💰 Configuration des Prix</h2>
+            <div id="pricingConfig">
+                <h3>PS4 (01 et 02)</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>1 Match FC26 / 15min Aventure</label>
+                        <input type="number" id="ps4_option1" value="300" step="50">
+                    </div>
+                    <div class="form-group">
+                        <label>2 Matchs FC26 / 30min Aventure</label>
+                        <input type="number" id="ps4_option2" value="600" step="50">
+                    </div>
+                </div>
+
+                <h3>PS5 (01 et 02)</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>1 Match FC26 / 10min Aventure</label>
+                        <input type="number" id="ps5_option1" value="500" step="50">
+                    </div>
+                    <div class="form-group">
+                        <label>3 Matchs FC26 / 30min Aventure</label>
+                        <input type="number" id="ps5_option2" value="1000" step="50">
+                    </div>
+                </div>
+
+                <h3>Autres Consoles</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nintendo Switch (15min)</label>
+                        <input type="number" id="switch_price" value="500" step="50">
+                    </div>
+                    <div class="form-group">
+                        <label>Simulateur (15min)</label>
+                        <input type="number" id="simulator_price" value="500" step="50">
+                    </div>
+                    <div class="form-group">
+                        <label>VR (15min)</label>
+                        <input type="number" id="vr_price" value="500" step="50">
+                    </div>
+                </div>
+
+                <button id="savePricingBtn" class="btn-primary">Enregistrer les Prix</button>
+            </div>
+        </div>
+
+        <!-- Electricity Settings -->
+        <div class="form-section">
+            <h2>⚡ Paramètres Électricité</h2>
+            <div class="form-group">
+                <label for="defaultKwhPrice">Prix par kWh par Défaut (F)</label>
+                <input type="number" id="defaultKwhPrice" value="100" step="1">
+            </div>
+            <button id="saveElectricityBtn" class="btn-primary">Enregistrer</button>
+        </div>
+
+        <!-- Business Info -->
+        <div class="form-section">
+            <h2>🏢 Informations de l'Entreprise</h2>
+            <div class="form-group">
+                <label for="businessName">Nom de la Salle</label>
+                <input type="text" id="businessName" placeholder="Gaming Room XYZ">
+            </div>
+            <div class="form-group">
+                <label for="businessAddress">Adresse</label>
+                <input type="text" id="businessAddress" placeholder="Douala, Cameroun">
+            </div>
+            <div class="form-group">
+                <label for="businessPhone">Téléphone</label>
+                <input type="tel" id="businessPhone" placeholder="+237 XXX XXX XXX">
+            </div>
+            <button id="saveBusinessBtn" class="btn-primary">Enregistrer</button>
+        </div>
+
+        <!-- Data Management -->
+        <div class="form-section">
+            <h2>🗄️ Gestion des Données</h2>
+            <div class="action-buttons">
+                <button id="exportDataBtn" class="btn-secondary">📥 Exporter toutes les données</button>
+                <button id="backupBtn" class="btn-secondary">💾 Créer une sauvegarde</button>
+            </div>
+            <div class="warning-box">
+                <p><strong>⚠️ Zone de Danger</strong></p>
+                <button id="clearDataBtn" class="btn-danger">🗑️ Effacer toutes les données</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth-check.js"></script>
+    <script src="js/settings.js"></script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nouvelle Session - Gestion Salle de Jeux</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">🎮 Salle de Jeux</div>
+        <div class="nav-links">
+            <a href="dashboard.html">Tableau de Bord</a>
+            <a href="sessions.html" class="active">Nouvelle Session</a>
+            <a href="reports.html">Rapports</a>
+            <a href="expenses.html">Dépenses</a>
+            <a href="settings.html">Paramètres</a>
+            <a href="#" id="logoutBtn">Déconnexion</a>
+        </div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Enregistrer une Nouvelle Session</h1>
+        </div>
+
+        <form id="sessionForm" class="session-form">
+            <!-- Customer Info -->
+            <div class="form-section">
+                <h2>Informations Client</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="customerName">Nom du Client (Optionnel)</label>
+                        <input type="text" id="customerName" placeholder="Nom du client">
+                    </div>
+                    <div class="form-group">
+                        <label for="customerPhone">Téléphone (Optionnel)</label>
+                        <input type="tel" id="customerPhone" placeholder="+237 XXX XXX XXX">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Session Details -->
+            <div class="form-section">
+                <h2>Détails de la Session</h2>
+                <div class="form-group">
+                    <label for="startTime">Heure de Début</label>
+                    <input type="datetime-local" id="startTime" required>
+                </div>
+
+                <div id="gamesContainer">
+                    <div class="game-entry">
+                        <h3>Jeu 1</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="console_0">Console</label>
+                                <select id="console_0" class="console-select" required>
+                                    <option value="">Sélectionner...</option>
+                                    <option value="PS4-01">PS4 01</option>
+                                    <option value="PS4-02">PS4 02</option>
+                                    <option value="PS5-01">PS5 01</option>
+                                    <option value="PS5-02">PS5 02</option>
+                                    <option value="Nintendo-Switch">Nintendo Switch</option>
+                                    <option value="Simulateur">Simulateur de Course</option>
+                                    <option value="VR">Réalité Virtuelle</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="gameType_0">Type de Jeu</label>
+                                <select id="gameType_0" class="game-type-select" required>
+                                    <option value="">Sélectionner console d'abord...</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="price-info" id="priceInfo_0"></div>
+                    </div>
+                </div>
+
+                <button type="button" id="addGameBtn" class="btn-secondary">➕ Ajouter un Jeu</button>
+            </div>
+
+            <!-- End Time and Payment -->
+            <div class="form-section">
+                <h2>Fin de Session et Paiement</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="endTime">Heure de Fin</label>
+                        <input type="datetime-local" id="endTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="paymentMethod">Mode de Paiement</label>
+                        <select id="paymentMethod" required>
+                            <option value="cash">Cash</option>
+                            <option value="mobile-money">Mobile Money</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="isPaid" checked>
+                        Paiement effectué
+                    </label>
+                </div>
+            </div>
+
+            <!-- Total -->
+            <div class="total-section">
+                <h2>Total à Payer: <span id="totalAmount">0 F</span></h2>
+            </div>
+
+            <button type="submit" class="btn-primary">Enregistrer la Session</button>
+        </form>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth-check.js"></script>
+    <script src="js/sessions.js"></script>
+</body>
+</html>
